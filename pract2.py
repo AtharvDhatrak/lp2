@@ -17,9 +17,15 @@ class Puzzle:
 
     def manhattan_distance(self, state):
         distance = 0
-        goal_positions = {1: (0, 0), 2: (0, 1), 3: (0, 2), 
-                          4: (1, 0), 5: (1, 2), 
-                          6: (2, 0), 7: (2, 1), 8: (2, 2), 0: (1, 1)}
+        goal_positions = {1: (0, 0), 
+                          2: (0, 1), 
+                          3: (0, 2), 
+                          4: (1, 0), 
+                          5: (1, 2), 
+                          6: (2, 0), 
+                          7: (2, 1), 
+                          8: (2, 2), 
+                          0: (1, 1)}
         for i in range(self.size**2):
             if state[i] == 0:
                 continue
