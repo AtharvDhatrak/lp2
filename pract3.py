@@ -79,12 +79,31 @@ def dijkstra(graph, start):
     return distances
 
 # Example usage
-graph = [
-    [(1, 1), (3, 3)],  # Connections from node 0 to 1 with cost 1 and to 3 with cost 3
-    [(1, 0), (1, 2), (4, 3)],  # Connections from node 1 to 0 with cost 1, to 2 with cost 1, and to 3 with cost 4
-    [(1, 1), (2, 3)],  # Connections from node 2 to 1 with cost 1 and to 3 with cost 2
-    [(3, 0), (4, 1), (2, 2)]  # Connections from node 3 to 0 with cost 3, to 1 with cost 4, and to 2 with cost 2
-]
+def edge_input_to_graph():
+    num_vertices = int(input("Enter the number of vertices: "))
+    num_edges = int(input("Enter the number of edges: "))
+
+    graph = [[] for _ in range(num_vertices)]
+
+    print("Enter edges in the format 'u v w' (space-separated), where u and v are vertices and w is the cost:")
+    for _ in range(num_edges):
+        u, v, w = map(int, input().split())
+        graph[u].append((w, v))
+        graph[v].append((w, u))  # Assuming undirected graph
+
+    return graph
+
+# Example usage
+graph = edge_input_to_graph()
+
+print("Graph Edges and Weights:")
+seen = set()
+for idx, connections in enumerate(graph):
+    for weight, neighbor in connections:
+        if (idx, neighbor) not in seen and (neighbor, idx) not in seen:
+            print(f"Edge from Node {idx} to Node {neighbor} with weight {weight}")
+            seen.add((idx, neighbor))
+
 
 print("Prim's MST:", prims(graph, 0))
 print("Kruskal's MST:", kruskals(graph))
