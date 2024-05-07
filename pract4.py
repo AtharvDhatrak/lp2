@@ -16,17 +16,16 @@ def print_solution(queen_positions, n):
     print()
 
 def backtracking_n_queens(row, queen_positions, n):
-    """ Solve N-Queens problem using backtracking. """
+    """ Solve N-Queens problem and find all solutions using backtracking. """
     if row == n:
         print_solution(queen_positions, n)
-        return True
+        return  # Remove 'True' to avoid stopping after the first solution
     for col in range(n):
         if is_safe(queen_positions, row, col, n):
             queen_positions[row] = col
-            if backtracking_n_queens(row + 1, queen_positions, n):
-                return True
+            backtracking_n_queens(row + 1, queen_positions, n)
             queen_positions[row] = -1
-    return False
+
 
 def branch_and_bound_n_queens(row, queen_positions, n):
     """ Solve N-Queens problem using branch and bound. """
@@ -50,8 +49,11 @@ def solve_n_queens(n, method='backtracking'):
             print("No solution found.")
 
 # Usage Example
-n = 4  # Number of queens and the size of the chessboard
+n = 5# Number of queens and the size of the chessboard
 print("Backtracking solution:")
 solve_n_queens(n, method='backtracking')
 print("Branch and Bound solution:")
 solve_n_queens(n, method='branch_and_bound')
+
+# def promising(row, col, n):
+#     return (n - col) >= (n - row - 1)
