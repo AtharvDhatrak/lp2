@@ -20,43 +20,26 @@ class UnionFind:
                 self.parent[rootQ] = rootP
                 self.rank[rootP] += 1
 
-def prims(graph, start):
-    import heapq
-    mst = []
-    visited = [False] * len(graph)
-    min_heap = [(0, start, start)]  # (cost, to_node, from_node)
-    
-    while min_heap:
-        cost, u, frm = heapq.heappop(min_heap)
-        if visited[u]:
-            continue
-        visited[u] = True
-        mst.append((frm, u, cost))
-        
-        for cost, v in graph[u]:
-            if not visited[v]:
-                heapq.heappush(min_heap, (cost, v, u))
-    
-    return mst[1:]  # Exclude the dummy edge from start to start
+def kruskal(nodes, edges):
+    result, i, e = [], 0, 0 
+    edges = sorted(edges, key=lambda item: item[2]) 
+    parent, rank = list(range(max(max(edge[0], edge[1]) for edge in edges) + 1)), [0] * (max(max(edge[0], edge[1]) for edge in edges) + 1)
+    while e < nodes - 1:
+        u, v, w = edges[i]; i += 1; x, y = find(parent, u), find(parent, v)
+        if x != y: e, result = e + 1, result + [(u, v, w)]; union(parent, rank, x, y)
+    return result
 
-def kruskals(graph):
-    edges = []
-    for u in range(len(graph)):
-        for cost, v in graph[u]:
-            edges.append((cost, u, v))
-    edges.sort()
-    
-    uf = UnionFind(len(graph))
-    mst = []
-    
-    for cost, u, v in edges:
-        if uf.find(u) != uf.find(v):
-            uf.union(u, v)
-            mst.append((u, v, cost))
-            if len(mst) == len(graph) - 1:
-                break
+def prim(nodes, edges):
+    max_node = max(max(edge[0], edge[1]) for edge in edges) + 1  
+    adj, visited, result, edge_list = {i: [] for i in range(1, max_node)}, [False] * max_node, [], [(0, 0, 1)]
+    for u, v, w in edges: adj[u].append((v, w)); adj[v].append((u, w))
+    while edge_list:
+        w, u, v = min(edge_list, key=lambda item: item[0]); edge_list.remove((w, u, v))
+        if not visited[v]: visited[v], result = True, result + [(u, v, w)]
+        for next_node, weight in adj[v]:
+            if not visited[next_node]: edge_list.append((weight, v, next_node))
+    return result[1:] 
 
-    return mst
 
 def dijkstra(graph, start):
     import heapq

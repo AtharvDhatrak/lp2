@@ -10,32 +10,24 @@ class Graph:
         self.graph[u].append(v)
         self.graph[v].append(u)
 
-    def dfs(self, v, visited=None):
-        if visited is None:
-            visited = set()
+    def dfs(self, v, visited):
         visited.add(v)
         print(v, end=' ')
-        for neighbor in self.graph.get(v, []):
-            if neighbor not in visited:
-                self.dfs(neighbor, visited)
+        for neighbour in self.graph[v]:
+            if neighbour not in visited:
+                self.dfs(neighbour, visited)
 
-    def recursive_bfs(self, queue, visited):
-        if not queue:
-            return  # No more nodes to process, end recursion
-        current_level_nodes = queue
-        queue = []
-        for node in current_level_nodes:
-            if node not in visited:
-                print(node, end=' ')
-                visited.add(node)
-                for neighbor in self.graph.get(node, []):
-                    if neighbor not in visited and neighbor not in queue:
-                        queue.append(neighbor)
-        self.recursive_bfs(queue, visited)  # Process the next level
-
-    def bfs(self, start):
+    def bfs(self, s):
         visited = set()
-        self.recursive_bfs([start], visited)
+        queue = [s]
+        visited.add(s)
+        while queue:
+            vertex = queue.pop(0)
+            print(vertex, end=" ")
+            for neighbour in self.graph[vertex]:
+                if neighbour not in visited:
+                    queue.append(neighbour)
+                    visited.add(neighbour)
 
 # Example usage
 g = Graph()
@@ -47,6 +39,6 @@ g.add_edge(2, 3)
 g.add_edge(3, 3)
 
 print("DFS starting from vertex 2:")
-g.dfs(2)
+g.dfs(2,set())
 print("\nBFS starting from vertex 2 using simulated recursion:")
 g.bfs(3)
