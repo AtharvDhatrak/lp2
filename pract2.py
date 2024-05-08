@@ -1,5 +1,4 @@
 from heapq import heappop, heappush
-import itertools
 
 class Puzzle:
     def __init__(self, start):
@@ -7,7 +6,6 @@ class Puzzle:
         self.start = start
 
     def goal_state(self):
-        # Return the tuple (1, 2, 3, 4, 0, 5, 6, 7, 8) for the goal state
         return (1, 2, 3, 4, 0, 5, 6, 7, 8)
 
     def print_state(self, state):
@@ -17,15 +15,9 @@ class Puzzle:
 
     def manhattan_distance(self, state):
         distance = 0
-        goal_positions = {1: (0, 0), 
-                          2: (0, 1), 
-                          3: (0, 2), 
-                          4: (1, 0), 
-                          5: (1, 2), 
-                          6: (2, 0), 
-                          7: (2, 1), 
-                          8: (2, 2), 
-                          0: (1, 1)}
+        goal_positions = {1: (0, 0), 2: (0, 1), 3: (0, 2), 
+                          4: (1, 0), 5: (1, 2), 6: (2, 0), 
+                          7: (2, 1), 8: (2, 2), 0: (1, 1)}
         for i in range(self.size**2):
             if state[i] == 0:
                 continue
@@ -73,8 +65,17 @@ class Puzzle:
             node = parents[node]
         return path[::-1]
 
+# Input processing
+def input_state():
+    print("Enter the initial state row by row, using 0 for the blank. Use space-separated format for each row:")
+    state = []
+    for i in range(3):
+        row = input(f"Enter row {i+1}: ")
+        state.extend(map(int, row.split()))
+    return tuple(state)
+
 # Example Usage
-start_state = (1, 2, 3, 4, 5, 6, 0, 7, 8)
+start_state = input_state()
 puzzle = Puzzle(start_state)
 print("Initial state:")
 puzzle.print_state(start_state)

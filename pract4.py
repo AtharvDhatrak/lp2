@@ -49,7 +49,7 @@ def solve_n_queens(n, method='backtracking'):
             print("No solution found.")
 
 # Usage Example
-n = 5# Number of queens and the size of the chessboard
+n=int (input("enter no of queens"))# Number of queens and the size of the chessboard
 print("Backtracking solution:")
 solve_n_queens(n, method='backtracking')
 print("Branch and Bound solution:")

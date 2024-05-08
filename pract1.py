@@ -31,12 +31,13 @@ class Graph:
 
 # Example usage
 g = Graph()
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(1, 2)
-g.add_edge(2, 0)
-g.add_edge(2, 3)
-g.add_edge(3, 3)
+num_edges = int(input("Enter the number of edges: "))
+
+# Loop to add edges to the graph
+for i in range(num_edges):
+    edge = input(f"Enter edge {i+1} in the format 'start end': ")
+    start, end = map(int, edge.split())
+    g.add_edge(start, end)
 
 print("DFS starting from vertex 2:")
 g.dfs(2,set())
